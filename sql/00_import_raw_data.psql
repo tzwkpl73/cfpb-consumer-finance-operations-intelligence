@@ -1,0 +1,42 @@
+\set ON_ERROR_STOP on
+
+-- Run this file with a source_csv variable. Example:
+-- psql -U postgres -d cfpb_analytics -v source_csv="C:/data/complaints.csv" -f 00_import_raw_data.psql
+\if :{?source_csv}
+\else
+  \echo 'ERROR: supply the CFPB CSV path with -v source_csv="C:/path/to/complaints.csv"'
+  \quit
+\endif
+
+DROP TABLE IF EXISTS public.raw_cfpb_complaints;
+
+CREATE UNLOGGED TABLE public.raw_cfpb_complaints (
+  date_received date,
+  product text,
+  sub_product text,
+  issue text,
+  sub_issue text,
+  consumer_complaint_narrative text,
+  company_public_response text,
+  company text,
+  state text,
+  zip_code text,
+  tags text,
+  consumer_consent_provided text,
+  submitted_via text,
+  date_sent_to_company date,
+  company_response_to_consumer text,
+  timely_response text,
+  consumer_disputed text,
+  complaint_id bigint
+);
+
+\copy public.raw_cfpb_complaints FROM :'source_csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8');
+
+CREATE INDEX raw_cfpb_complaints_date_received_idx
+  ON public.raw_cfpb_complaints (date_received);
+
+CREATE INDEX raw_cfpb_complaints_complaint_id_idx
+  ON public.raw_cfpb_complaints (complaint_id);
+
+ANALYZE public.raw_cfpb_complaints;

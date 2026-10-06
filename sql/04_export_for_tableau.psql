@@ -1,0 +1,10 @@
+\set ON_ERROR_STOP on
+
+-- Before running, replace every REPLACE_WITH_YOUR_EXPORT_FOLDER value below.
+-- Example Windows path: C:/Users/your-name/Documents/cfpb_exports
+-- Run with: psql -U postgres -d cfpb_analytics -f 04_export_for_tableau.psql
+
+\copy (SELECT * FROM analytics.overall_monthly_kpis ORDER BY month_start) TO 'REPLACE_WITH_YOUR_EXPORT_FOLDER/overall_monthly_kpis.csv' WITH CSV HEADER;
+\copy (SELECT * FROM analytics.monthly_product_kpis ORDER BY month_start, complaint_count DESC) TO 'REPLACE_WITH_YOUR_EXPORT_FOLDER/monthly_product_kpis.csv' WITH CSV HEADER;
+\copy (SELECT * FROM analytics.monthly_issue_kpis ORDER BY month_start, complaint_count DESC) TO 'REPLACE_WITH_YOUR_EXPORT_FOLDER/monthly_issue_kpis.csv' WITH CSV HEADER;
+\copy (SELECT * FROM analytics.state_product_kpis ORDER BY state, complaint_count DESC) TO 'REPLACE_WITH_YOUR_EXPORT_FOLDER/state_product_kpis.csv' WITH CSV HEADER;
