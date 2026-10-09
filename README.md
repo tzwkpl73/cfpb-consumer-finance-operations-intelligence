@@ -1,4 +1,5 @@
 # Consumer Financial Operations & Risk Intelligence
+<img width="3840" height="1971" alt="image" src="https://github.com/user-attachments/assets/43018189-4495-48d7-ba48-f1315f383ff1" />
 
 **[View the interactive Tableau Public dashboard](https://public.tableau.com/app/profile/taige.zhu1321/viz/Book1_17913192948350/Dashboard1)**
 
